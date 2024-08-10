@@ -16,7 +16,7 @@ mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopol
     .catch(err => console.error(err));
 
 // Routes
-app.use('/', urlRoutes);
+app.use('https://backend-3qhqg7qbg-tushars-projects-6aaefbd1.vercel.app/', urlRoutes);
 
 // Start the server
 const PORT = process.env.PORT || 5000;
