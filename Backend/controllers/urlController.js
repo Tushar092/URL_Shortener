@@ -1,12 +1,21 @@
 const urlModel = require('../models/urlModel');
 const shortid = require('shortid');
 
+const isValidUrl = (string) => {
+    try {
+        new URL(string);
+        return true;
+    } catch (err) {
+        return false;
+    }
+};
+
 const shortenUrl = async (req, res) => {
     const { originalUrl } = req.body;
     const baseUrl = process.env.BASE_URL;
 
     // Check base URL validity
-    if (!validUrl.isUri(baseUrl)) {
+    if (!isValidUrl(baseUrl)) {
         return res.status(400).json('Invalid base URL');
     }
 
@@ -15,8 +24,8 @@ const shortenUrl = async (req, res) => {
 
     try {
         // Check if original URL is valid
-        if (validUrl.isUri(originalUrl)) {
-            let url = await Url.findOne({ originalUrl });
+        if (isValidUrl(originalUrl)) {
+            let url = await urlModel.findOne({ originalUrl });
 
             if (url) {
                 res.json(url);
@@ -43,7 +52,7 @@ const shortenUrl = async (req, res) => {
 
 const redirectToOriginalUrl = async (req, res) => {
     try {
-        const url = await Url.findOne({ shortCode: req.params.shortCode });
+        const url = await urlModel.findOne({ shortCode: req.params.shortCode });
 
         if (url) {
             return res.redirect(url.originalUrl);
