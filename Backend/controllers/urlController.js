@@ -32,7 +32,7 @@ const shortenUrl = async (req, res) => {
             } else {
                 const shortUrl = `${baseUrl}/${shortCode}`;
 
-                url = new Url({
+                url = new urlModel({
                     originalUrl,
                     shortCode
                 });
